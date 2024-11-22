@@ -7,8 +7,9 @@ public class Lista <E> {
         this.inicio = null;
     }
     
-    public void mostrarLista(){     // Es de prueba
+    public void mostrarLista(){   
         Nodo<E> aux = this.inicio;
+        
         while (aux != null){
             System.out.println(aux.getPricipal().toString());
             aux=aux.getSiguiente();
