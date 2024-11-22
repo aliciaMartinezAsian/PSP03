@@ -14,7 +14,7 @@ public class Cuenta {
 	
 	
 	
-	public Cuenta(int numero, String titular, Double saldo, Double saldoMinimo, LocalDate fechaApertura) {
+	public Cuenta(int numero, String titular, Double saldo, Double saldoMinimo, LocalDate fechaApertura) throws TitularInvalidoException, SaldoInvalidoException, SaldoMinInvalidoException {
 		setNumero(numero);
 		setTitular(titular);
 		setSaldo(saldo);
@@ -26,35 +26,47 @@ public class Cuenta {
 		return numero;
 	}
 	public void setNumero(int numero) {
-		if(numero>0 && numero<1001) {
 			this.numero = numero;
-		}
+		
 		
 	}
 	public String getTitular() {
 		return titular;
 	}
-	public void setTitular(String titular) {
+	public void setTitular(String titular) throws TitularInvalidoException {
 		String alfanumerico = "\\w+"; 
 
         Pattern pattern = Pattern.compile(alfanumerico);
         Matcher matcher = pattern.matcher(titular);
 
-        if (matcher.matches()) {
-        	this.titular = titular;
+        if (!matcher.matches()) {
+        	throw new TitularInvalidoException("El titular debe ser alfanumérico");
+        }else {
+        	if(titular.length()>50){
+            	throw new TitularInvalidoException("El titular debe tener como máximo 50 caracteres");
+            	}else {
+            		this.titular = titular;
+            	}
         }
 		
 	}
 	public Double getSaldo() {
 		return saldo;
 	}
-	public void setSaldo(Double saldo) {
-		this.saldo = saldo;
+	public void setSaldo(Double saldo) throws SaldoInvalidoException {
+		if (saldo < this.saldoMinimo)
+			throw new SaldoInvalidoException("El sueldo no puede ser mayor al sueldo maximo");
+		else {
+				this.saldo = saldo;
+		}
 	}
 	public Double getSaldoMinimo() {
 		return saldoMinimo;
 	}
-	public void setSaldoMinimo(Double saldoMinimo) {
+	public void setSaldoMinimo(Double saldoMinimo) throws SaldoMinInvalidoException {
+		if(saldoMinimo<0) {
+			throw new SaldoMinInvalidoException ("El saldo no puede ser negativo");
+		}
 		this.saldoMinimo = saldoMinimo;
 	}
 	public LocalDate getFechaApertura() {

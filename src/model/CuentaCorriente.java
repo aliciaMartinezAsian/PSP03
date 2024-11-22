@@ -8,7 +8,7 @@ public class CuentaCorriente extends Cuenta {
 	
 
 	public CuentaCorriente(int numero, String titular, Double saldo, Double saldoMinimo, LocalDate fechaApertura,
-			Double comisionMantenimiento, TipoComisionMensual tipo) {
+			Double comisionMantenimiento, TipoComisionMensual tipo) throws TitularInvalidoException, SaldoInvalidoException, ComisionInvalidaException, SaldoMinInvalidoException {
 		super(numero, titular, saldo, saldoMinimo, fechaApertura);
 		setComisionMantenimiento(comisionMantenimiento);
 		setTipo(tipo);
@@ -18,8 +18,10 @@ public class CuentaCorriente extends Cuenta {
 		return comisionMantenimiento;
 	}
 
-	public void setComisionMantenimiento(Double comisionMantenimiento) {
-		if(comisionMantenimiento>0) {
+	public void setComisionMantenimiento(Double comisionMantenimiento) throws ComisionInvalidaException {
+		if(comisionMantenimiento<0) {
+			throw new ComisionInvalidaException("La comisión de mantenimiento no puede ser negativa");
+		}else {
 			this.comisionMantenimiento = comisionMantenimiento;
 		}
 		
