@@ -10,10 +10,11 @@ public class Ctr {
 	public Ctr() {
 		lista=new Lista();
 		
+		
 	}
 	
 	public void anadir(Cuenta c) {
-		lista.insertarNodo(c);
+
 	}
 	
 }
