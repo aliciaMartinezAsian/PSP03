@@ -7,7 +7,7 @@ public class CuentaAhorro extends Cuenta {
 	private TipoCuentaAhorro tipo;
 	
 
-	public CuentaAhorro(int numero, String titular, Double saldo, Double saldoMinimo, LocalDate fechaApertura,int interes, TipoCuentaAhorro tipo) throws TitularInvalidoException, SaldoInvalidoException, InteresInvalidoException, SaldoMinInvalidoException {
+	public CuentaAhorro(int numero, String titular, Double saldo, Double saldoMinimo, LocalDate fechaApertura,Double interes, TipoCuentaAhorro tipo) throws TitularInvalidoException, SaldoInvalidoException, InteresInvalidoException, SaldoMinInvalidoException {
 		super(numero, titular, saldo, saldoMinimo, fechaApertura);
 		setInteres(interes);
 		setTipo(tipo);
@@ -17,11 +17,11 @@ public class CuentaAhorro extends Cuenta {
 		return interes;
 	}
 
-	public void setInteres(int interes) throws InteresInvalidoException {
-		if(interes>=0 && interes<=100) {
+	public void setInteres(Double interes2) throws InteresInvalidoException {
+		if(interes2>=0 && interes2<=100) {
 			throw new InteresInvalidoException ("El interes anual debe estar entre el 0% y el 100%");
 		}else {
-			this.interes = interes;
+			this.interes = interes2;
 		}
 		
 	}
