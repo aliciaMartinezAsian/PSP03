@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 import model.ComisionInvalidaException;
 import model.Cuenta;
@@ -39,7 +41,7 @@ public class Ctr {
 			
 			
 		 }catch(Exception e){
-			 
+			 System.out.println(e.getMessage());
 		 }
 		
 	}
@@ -82,7 +84,7 @@ public class Ctr {
 		                double saldo = Double.parseDouble(datos[2].trim());
 		                double saldoMinimo = Double.parseDouble(datos[3].trim());
 		                LocalDate fechaApertura = LocalDate.parse(datos[4].trim());
-		                Double interes = Double.parseDouble(datos[5].trim());  // 'interes' es un valor entero
+		                double interes = Double.parseDouble(datos[5].trim());  // 'interes' es un valor entero
 		                TipoCuentaAhorro tipo = TipoCuentaAhorro.valueOf(datos[6].trim());  // Cambiar a TipoCuentaAhorro
 
 		                // Crear la cuenta de ahorro y añadirla a la lista
@@ -95,7 +97,43 @@ public class Ctr {
 
 	 
 	public void anadir(Cuenta c) {
-
+		this.listaCuentas.agregar(c);
+		guardar();
 	}
-	
+	public void borrarTodo() {
+		this.listaCuentas=new Lista<Cuenta>();
+	}
+	public void borrar(Cuenta c) {
+		this.listaCuentas.eliminar(c);
+	}
+	public void modificar() {
+		
+	}
+	public void guardar() {
+		
+	}
+	public List<Cuenta> getLista() {
+		return this.listaCuentas.getLista();
+	}
+	public void actualizarSaldo(Cuenta c) {
+		LocalDate ahora=LocalDate.now();
+		//Si es cuenta ahorra aumenta su interes por año en %
+		if(c instanceof CuentaAhorro) {
+			long aniosDiferencia=ChronoUnit.YEARS.between(c.getFechaApertura(), ahora);
+			
+		CuentaAhorro caux=(CuentaAhorro) c;
+			double nuevoSaldo=c.getSaldo()+aniosDiferencia*caux.getInteres();
+		}
+		
+		
+		//Si es cuenta corriente disminuye la comision por mes.
+		if(c instanceof CuentaCorriente) {
+			long mesesDiferencia=ChronoUnit.MONTHS.between(c.getFechaApertura(), ahora);
+			
+		CuentaAhorro caux=(CuentaAhorro) c;
+			double nuevoSaldo=c.getSaldo()+mesesDiferencia*caux.getInteres();
+		}
+		//Guardar nuevo dato
+		
+	}
 }

@@ -3,7 +3,7 @@ package model;
 import java.time.LocalDate;
 
 public class CuentaAhorro extends Cuenta {
-	private int interes;
+	private Double interes;
 	private TipoCuentaAhorro tipo;
 	
 
@@ -13,7 +13,7 @@ public class CuentaAhorro extends Cuenta {
 		setTipo(tipo);
 	}
 
-	public int getInteres() {
+	public Double getInteres() {
 		return interes;
 	}
 

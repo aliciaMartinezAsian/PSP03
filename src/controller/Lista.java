@@ -72,7 +72,7 @@ public class Lista <E> {
     	
     }
     
-    public List sacarLista() {
+    public List getLista() {
     	Nodo temporal=primero;
     	List<Cuenta> listaTemp=new ArrayList();
     	
