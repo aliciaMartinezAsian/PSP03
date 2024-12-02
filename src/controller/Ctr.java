@@ -265,7 +265,7 @@ public class Ctr {
 		 // Crear un objeto Random
         Random random = new Random();
         // Generar un año aleatorio entre yearStart y yearEnd
-        int year = random.nextInt(yearEnd - yearStart + 1) + yearStart;
+        int year = random.nextInt(yearEnd - yearStart) + yearStart;
         // Generar un mes aleatorio entre 1 y 12
         int month = random.nextInt(12) + 1;
 
@@ -291,7 +291,13 @@ public class Ctr {
         }
 
         // Crear la fecha aleatoria
-        return LocalDate.of(year, month, day);
+        LocalDate fechaGenerada=LocalDate.of(year, month, day);
+        if(fechaGenerada.isBefore(LocalDate.now())){
+        	return fechaGenerada;
+        }else {
+            return this.generarFecha(yearStart, yearEnd);
+        }
+   
     }
 	
 	// Método para comprobar si un año es bisiesto
