@@ -7,10 +7,10 @@ public class CuentaAhorro extends Cuenta {
 	private TipoCuentaAhorro tipo;
 	
 
-	public CuentaAhorro(int numero, String titular, Double saldo, Double saldoMinimo, LocalDate fechaApertura,Double interes, TipoCuentaAhorro tipo) throws TitularInvalidoException, SaldoInvalidoException, InteresInvalidoException, SaldoMinInvalidoException {
+	public CuentaAhorro(int numero, String titular, Double saldo, Double saldoMinimo, LocalDate fechaApertura,Double interes, String tipo) throws TitularInvalidoException, SaldoInvalidoException, InteresInvalidoException, SaldoMinInvalidoException {
 		super(numero, titular, saldo, saldoMinimo, fechaApertura);
 		setInteres(interes);
-		setTipo(tipo);
+		setTipo(TipoCuentaAhorro.valueOf(tipo.toUpperCase()));
 	}
 
 	public Double getInteres() {
