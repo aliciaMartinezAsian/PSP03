@@ -7,9 +7,16 @@ public class CuentaCorriente extends Cuenta {
 	private TipoComisionMensual tipo;
 	
 
-	public CuentaCorriente(int numero, String titular, Double saldo, Double saldoMinimo, LocalDate fechaApertura,
+	public CuentaCorriente(Long numero, String titular, Double saldo, Double saldoMinimo, LocalDate fechaApertura,
 			Double comisionMantenimiento, TipoComisionMensual tipo) throws TitularInvalidoException, SaldoInvalidoException, ComisionInvalidaException, SaldoMinInvalidoException {
 		super(numero, titular, saldo, saldoMinimo, fechaApertura);
+		setComisionMantenimiento(comisionMantenimiento);
+		setTipo(tipo);
+	}
+
+	public CuentaCorriente(String titular, Double saldo, Double saldoMinimo, LocalDate fechaApertura,
+			Double comisionMantenimiento, TipoComisionMensual tipo) throws TitularInvalidoException, SaldoInvalidoException, ComisionInvalidaException, SaldoMinInvalidoException {
+		super(titular, saldo, saldoMinimo, fechaApertura);
 		setComisionMantenimiento(comisionMantenimiento);
 		setTipo(tipo);
 	}
@@ -35,10 +42,6 @@ public class CuentaCorriente extends Cuenta {
 		this.tipo = tipo;
 	}
 	
-
-	public enum TipoComisionMensual {
-		COMUN, JOVEN, PLAZO_FIJO, ONLINE;
-	}
 
 
 	@Override

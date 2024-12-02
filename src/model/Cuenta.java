@@ -4,29 +4,44 @@ import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import controller.Ctr;
+
 public class Cuenta {
 	
-	private int numero;
+	private Long numero;
 	private transient String titular;
 	private Double saldo;
 	private Double saldoMinimo;
 	private LocalDate fechaApertura;
+	public static Long numCuenta;
 	
 	
-	
-	public Cuenta(int numero, String titular, Double saldo, Double saldoMinimo, LocalDate fechaApertura) throws TitularInvalidoException, SaldoInvalidoException, SaldoMinInvalidoException {
+	public Cuenta(Long numero, String titular, Double saldo, Double saldoMinimo, LocalDate fechaApertura) throws TitularInvalidoException, SaldoInvalidoException, SaldoMinInvalidoException {
+			
 		setNumero(numero);
 		setTitular(titular);
 		setSaldo(saldo);
 		setSaldoMinimo(saldoMinimo);
 		setFechaApertura(fechaApertura);
 	}
+	public Cuenta(String titular, Double saldo, Double saldoMinimo, LocalDate fechaApertura) throws TitularInvalidoException, SaldoInvalidoException, SaldoMinInvalidoException {
+		
+		//Numero de cuenta se pone automatico y va aumentando
+		setNumero(Cuenta.numCuenta);
+		numCuenta++;
+		
+		setTitular(titular);
+		setSaldo(saldo);
+		setSaldoMinimo(saldoMinimo);
+		setFechaApertura(fechaApertura);
+	}
 	
-	public int getNumero() {
+	
+	public Long getNumero() {
 		return numero;
 	}
-	public void setNumero(int numero) {
-			this.numero = numero;
+	public void setNumero(Long numCuenta2) {
+			this.numero = numCuenta2;
 		
 		
 	}
@@ -55,7 +70,7 @@ public class Cuenta {
 	}
 	public void setSaldo(Double saldo) throws SaldoInvalidoException {
 		if (saldo < this.saldoMinimo)
-			throw new SaldoInvalidoException("El sueldo no puede ser mayor al sueldo maximo");
+			throw new SaldoInvalidoException("El saldo no puede ser menor al saldo minimo");
 		else {
 				this.saldo = saldo;
 		}

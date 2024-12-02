@@ -7,8 +7,13 @@ public class CuentaAhorro extends Cuenta {
 	private TipoCuentaAhorro tipo;
 	
 
-	public CuentaAhorro(int numero, String titular, Double saldo, Double saldoMinimo, LocalDate fechaApertura,Double interes, TipoCuentaAhorro tipo) throws TitularInvalidoException, SaldoInvalidoException, InteresInvalidoException, SaldoMinInvalidoException {
+	public CuentaAhorro(Long numero, String titular, Double saldo, Double saldoMinimo, LocalDate fechaApertura,Double interes, TipoCuentaAhorro tipo) throws TitularInvalidoException, SaldoInvalidoException, InteresInvalidoException, SaldoMinInvalidoException {
 		super(numero, titular, saldo, saldoMinimo, fechaApertura);
+		setInteres(interes);
+		setTipo(tipo);
+	}
+	public CuentaAhorro(String titular, Double saldo, Double saldoMinimo, LocalDate fechaApertura,Double interes, TipoCuentaAhorro tipo) throws TitularInvalidoException, SaldoInvalidoException, InteresInvalidoException, SaldoMinInvalidoException {
+		super(titular, saldo, saldoMinimo, fechaApertura);
 		setInteres(interes);
 		setTipo(tipo);
 	}
@@ -34,9 +39,7 @@ public class CuentaAhorro extends Cuenta {
 		this.tipo = tipo;
 	}
 
-	public enum TipoCuentaAhorro {
-		COMUN, JOVEN, PLAZO_FIJO, ONLINE;
-	}
+
 
 	@Override
 	public String toString() {
