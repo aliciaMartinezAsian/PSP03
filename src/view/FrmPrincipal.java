@@ -76,6 +76,7 @@ public class FrmPrincipal extends JFrame{
 
     private void cargar1000Cuentas() {
     	ctr.generarCuentas();
+    	panelVer.cargarCuentas(ctr.getLista());
     	panelLista.cargarCuentas(ctr.getLista());
 	}
 
@@ -111,7 +112,7 @@ public class FrmPrincipal extends JFrame{
     private void vaciarLista() {
     	ctr.borrarTodo();
     	List<Cuenta> cuentas = ctr.getLista();
-    	
+    	panelVer.cargarCuentas(cuentas);
     	panelLista.cargarCuentas(cuentas);
     }
 }
