@@ -102,7 +102,7 @@ public class FrmPrincipal extends JFrame{
     
     private void vaciarLista() {
     	ctr.borrarTodo();
-List<Cuenta> cuentas = ctr.getLista();
+    	List<Cuenta> cuentas = ctr.getLista();
     	
     	panelLista.cargarCuentas(cuentas);
     }

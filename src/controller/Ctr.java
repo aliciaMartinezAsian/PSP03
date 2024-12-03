@@ -325,11 +325,11 @@ public class Ctr {
 	public void generarPrueba() throws TitularInvalidoException, SaldoInvalidoException, InteresInvalidoException, SaldoMinInvalidoException, ComisionInvalidaException 
 	{
 		
-        CuentaCorriente cuentaCorriente1 = new CuentaCorriente("Juan Perez", 1500.0, 500.0,LocalDate.now(), 10.0, TipoComisionMensual.MANTENIMIENTO);
-        CuentaCorriente cuentaCorriente2 = new CuentaCorriente("Ana Garcia", 2300.0, 800.0,LocalDate.now(), 15.0, TipoComisionMensual.ADMINISTRACION);
+        CuentaCorriente cuentaCorriente1 = new CuentaCorriente(1L,"Juan Perez", 1500.0, 500.0,LocalDate.now(), 10.0, TipoComisionMensual.MANTENIMIENTO);
+        CuentaCorriente cuentaCorriente2 = new CuentaCorriente(2L,"Ana Garcia", 2300.0, 800.0,LocalDate.now(), 15.0, TipoComisionMensual.ADMINISTRACION);
         
-        CuentaAhorro cuentaAhorro1 = new CuentaAhorro("Carlos Lopez", 5000.0, 300.0, LocalDate.now(), 2.5, TipoCuentaAhorro.ONLINE);
-        CuentaAhorro cuentaAhorro2 = new CuentaAhorro("Lucia Martinez", 12000.0, 1000.0,LocalDate.now(), 3.0, TipoCuentaAhorro.PLAZO_FIJO);
+        CuentaAhorro cuentaAhorro1 = new CuentaAhorro(3L,"Carlos Lopez", 5000.0, 300.0, LocalDate.now(), 2.5, TipoCuentaAhorro.ONLINE);
+        CuentaAhorro cuentaAhorro2 = new CuentaAhorro(4L,"Lucia Martinez", 12000.0, 1000.0,LocalDate.now(), 3.0, TipoCuentaAhorro.PLAZO_FIJO);
         
         
         
