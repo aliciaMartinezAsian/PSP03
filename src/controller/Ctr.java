@@ -2,6 +2,7 @@ package controller;
 
 import java.io.BufferedReader; 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class Ctr {
 	
 	private Lista<Cuenta> listaCuentas;
 	private static Ctr ctr=null;
-	
+	private String ruta="Cuentas.csv";
 	//Control=1 CuentaCorriente
 	//Control=2 CuentaAhorro
 	public static Ctr  getControlador(){
@@ -45,35 +46,49 @@ public class Ctr {
 		listaCuentas=new Lista();
 		
 		List<Long> listaNumeros=new ArrayList<Long>();
+		File fichero = new File(ruta);
 		
-		//Cargar fichero
-		 try (BufferedReader br = new BufferedReader(new FileReader("Cuentas.dat"))) {
-			 while(br.ready()) {
-				 int control= br.read();
+		//Comprobamos si existe
+		if(fichero.exists()) {
+			//Si existe cargamos el fichero
+			 try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
+				 while(br.ready()) {
+					 int control= br.read();
+					 
+					 if(control==1) {
+						CuentaCorriente cuenta=cargarCuentaCorriente(br);
+						  listaCuentas.agregar(cuenta);
+						  listaNumeros.add(cuenta.getNumero());
+					 }
+					 if(control==2) {
+						 CuentaAhorro cuenta=cargarCuentaAhorro(br);
+						  listaCuentas.agregar(cuenta);
+						  listaNumeros.add(cuenta.getNumero());
+					 }
 				 
-				 if(control==1) {
-					CuentaCorriente cuenta=cargarCuentaCorriente(br);
-					  listaCuentas.agregar(cuenta);
-					  listaNumeros.add(cuenta.getNumero());
 				 }
-				 if(control==2) {
-					 CuentaAhorro cuenta=cargarCuentaAhorro(br);
-					  listaCuentas.agregar(cuenta);
-					  listaNumeros.add(cuenta.getNumero());
-				 }
-			 
+				
+				
+			 }catch(Exception e){
+				 System.out.println(e.getMessage());
 			 }
-			
-			
-		 }catch(Exception e){
-			 System.out.println(e.getMessage());
-		 }
-		 //Para calcular los numeros de cuenta
-		 if(listaNumeros.size()!=0) {
-			 Cuenta.numCuenta=Collections.max(listaNumeros)+1;
-		 }else {
-			 Cuenta.numCuenta=1L;
-		 }
+			 //Para calcular los numeros de cuenta
+			 if(listaNumeros.size()!=0) {
+				 Cuenta.numCuenta=Collections.max(listaNumeros)+1;
+			 }else {
+				 Cuenta.numCuenta=1L;
+			 }
+			 
+		}else {
+			//Si no existe lo creamos
+			try {
+				fichero.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		
 	}
 	
@@ -130,7 +145,7 @@ public class Ctr {
 		}
 	 
 	 public void guardar() {
-		    try (BufferedWriter bw = new BufferedWriter(new FileWriter("Cuentas.dat"))) {
+		    try (BufferedWriter bw = new BufferedWriter(new FileWriter(ruta))) {
 		        // Recorrer la lista de cuentas y guardarlas
 		    	List<Cuenta> listAux=this.listaCuentas.getLista();
 		        for (Cuenta cuenta : listAux) {
