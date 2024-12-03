@@ -40,7 +40,15 @@ public class PanelLista extends JPanel {
         // Agregar cuentas al modelo con información del tipo
         for (Cuenta cuenta : cuentas) {
             String tipo = (cuenta instanceof CuentaAhorro) ? "Cuenta Ahorro" : "Cuenta Corriente";
-            String texto = String.format("%s - Nº: %d - Titular: %s", tipo, cuenta.getNumero(), cuenta.getTitular());
+            String texto = String.format(
+                    "%s - Nº: %d - Titular: %s - Saldo: %.2f - Saldo Mínimo: %.2f - Fecha de Apertura: %s",
+                    tipo,
+                    cuenta.getNumero(),
+                    cuenta.getTitular(),
+                    cuenta.getSaldo(),
+                    cuenta.getSaldoMinimo(),
+                    cuenta.getFechaApertura().toString()
+                );
             listModel.addElement(texto);
         }
     }
