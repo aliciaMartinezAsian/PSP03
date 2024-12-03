@@ -31,8 +31,7 @@ public class Ctr {
 	private Lista<Cuenta> listaCuentas;
 	private static Ctr ctr=null;
 	private String ruta="Cuentas.csv";
-	//Control=1 CuentaCorriente
-	//Control=2 CuentaAhorro
+
 	public static Ctr  getControlador(){
 		if(ctr==null) {
 			ctr=new Ctr();
@@ -42,9 +41,12 @@ public class Ctr {
 		}
 	}
 	public Ctr() {
-		//Elementos auxiliares
+	
 		listaCuentas=new Lista();
-		
+	}
+	public void cargar() {
+		//Elementos auxiliares
+
 		List<Long> listaNumeros=new ArrayList<Long>();
 		File fichero = new File(ruta);
 		
@@ -55,6 +57,8 @@ public class Ctr {
 				 while(br.ready()) {
 					 int control= br.read();
 					 
+						//Control=1 CuentaCorriente
+						//Control=2 CuentaAhorro
 					 if(control==1) {
 						CuentaCorriente cuenta=cargarCuentaCorriente(br);
 						  listaCuentas.agregar(cuenta);
@@ -76,12 +80,13 @@ public class Ctr {
 			 if(listaNumeros.size()!=0) {
 				 Cuenta.numCuenta=Collections.max(listaNumeros)+1;
 			 }else {
-				 Cuenta.numCuenta=1L;
+				 Cuenta.numCuenta=10L;
 			 }
 			 
 		}else {
 			//Si no existe lo creamos
 			try {
+				Cuenta.numCuenta=0L;
 				fichero.createNewFile();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -89,9 +94,7 @@ public class Ctr {
 			}
 		}
 		
-		
 	}
-	
 	 public CuentaCorriente cargarCuentaCorriente(BufferedReader br) throws TitularInvalidoException, SaldoInvalidoException, ComisionInvalidaException, SaldoMinInvalidoException, IOException {
 	       
 	            String linea;

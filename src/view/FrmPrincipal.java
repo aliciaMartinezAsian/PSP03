@@ -26,10 +26,12 @@ public class FrmPrincipal extends JFrame{
     private MenuBar menuBar;
     private JPanel contentPane;
     
-    private Ctr ctr = Ctr.getControlador();
+    private Ctr ctr;
     
 
     public FrmPrincipal() {
+    	ctr=Ctr.getControlador();
+    	
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(240, 240, 450, 300);
         setResizable(false);
@@ -83,6 +85,7 @@ public class FrmPrincipal extends JFrame{
     	List<Cuenta> cuentas = ctr.getLista();
     	
     	panelLista.cargarCuentas(cuentas);
+
     }
     
     private void realizarPrueba() {
@@ -93,8 +96,7 @@ public class FrmPrincipal extends JFrame{
 			
 		} catch (TitularInvalidoException | SaldoInvalidoException | InteresInvalidoException
 				| SaldoMinInvalidoException | ComisionInvalidaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
     }
     
