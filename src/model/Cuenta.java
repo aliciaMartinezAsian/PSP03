@@ -49,7 +49,7 @@ public class Cuenta {
 		return titular;
 	}
 	public void setTitular(String titular) throws TitularInvalidoException {
-		String alfanumerico = "\\w+"; 
+		 String alfanumerico = "^[\\w ]+$";
 
         Pattern pattern = Pattern.compile(alfanumerico);
         Matcher matcher = pattern.matcher(titular);

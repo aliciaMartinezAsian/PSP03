@@ -35,7 +35,7 @@ public class FrmPrincipal extends JFrame{
         setResizable(false);
         
         setTitle("Gestión de Cuentas");
-        setSize(500, 300);
+        setSize(550, 350);
         
         menuBar = new MenuBar();
         setJMenuBar(menuBar);
