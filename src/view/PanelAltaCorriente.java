@@ -29,20 +29,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import model.*;
 
-package view;
-
-import javax.swing.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
-import controller.Ctr;
-import model.*;
-
 public class PanelAltaCorriente extends JPanel {
     private JButton btnGuardar, btnCancelar;
+
     private JTextField titularField, saldoField, saldoMinField, fechaAperturaField, comisionField;
     private JComboBox<String> tipoComboBox;
+    
     private Ctr ctr = Ctr.getControlador();
 
     public PanelAltaCorriente() {
@@ -106,6 +98,7 @@ public class PanelAltaCorriente extends JPanel {
         add(btnCancelar);
         btnCancelar.setBounds(260, 200, 90, 30);
 
+        // Inicializar listeners
         initListeners();
     }
 
@@ -115,76 +108,37 @@ public class PanelAltaCorriente extends JPanel {
     }
 
     private void agregarCuenta() {
-        String titular = titularField.getText().trim();
-        String strSaldo = saldoField.getText().trim();
-        String strSaldoMin = saldoMinField.getText().trim();
-        String strFecha = fechaAperturaField.getText().trim();
-        String strComision = comisionField.getText().trim();
+        String titular = titularField.getText();
+        String strSaldo = saldoField.getText();
+        String strSaldoMin = saldoMinField.getText();
+        String strFecha = fechaAperturaField.getText();
+        String strComision = comisionField.getText();
         String strTipo = (String) tipoComboBox.getSelectedItem();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         try {
-            // Validar campos obligatorios
-            if (titular.isEmpty() || strSaldo.isEmpty() || strSaldoMin.isEmpty() ||
-                strFecha.isEmpty() || strComision.isEmpty()) {
-                throw new IllegalArgumentException("Todos los campos son obligatorios.");
-            }
-
-            // Validar y parsear fecha
-            LocalDate fecha;
-            try {
-                fecha = LocalDate.parse(strFecha, formatter);
-            } catch (DateTimeParseException e) {
-                throw new FechaInvalidaException("La fecha no cumple el formato dd-MM-yyyy.");
-            }
-
+            LocalDate fecha = LocalDate.parse(strFecha, formatter);
             if (fecha.isAfter(LocalDate.now())) {
                 throw new FechaInvalidaException("La fecha de apertura no puede ser futura.");
             }
 
-            // Parsear valores numéricos con validación
-            double saldo = validarYConvertirADouble(strSaldo, "Saldo");
-            double saldoMin = validarYConvertirADouble(strSaldoMin, "Saldo mínimo");
-            double comision = validarYConvertirADouble(strComision, "Comisión");
+            double saldo = Double.parseDouble(strSaldo);
+            double saldoMin = Double.parseDouble(strSaldoMin);
+            double comision = Double.parseDouble(strComision);
+            TipoComisionMensual tipo = TipoComisionMensual.valueOf(strTipo);
 
-            // Validar tipo de comisión
-            TipoComisionMensual tipo;
-            try {
-                tipo = TipoComisionMensual.valueOf(strTipo);
-            } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("Tipo de comisión no válido.");
-            }
-
-            // Crear la nueva cuenta corriente
             CuentaCorriente nuevaCuenta = new CuentaCorriente(titular, saldo, saldoMin, fecha, comision, tipo);
             ctr.anadir(nuevaCuenta);
-
+            
             JOptionPane.showMessageDialog(this, "Cuenta corriente guardada con éxito.", "Información", JOptionPane.INFORMATION_MESSAGE);
 
-        } catch (SaldoInvalidoException e) {
-            JOptionPane.showMessageDialog(this, "Saldo inválido, \ndatos no guardados", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (FechaInvalidaException e1) {
-            JOptionPane.showMessageDialog(this, "Fecha inválida, \ndatos no guardados", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (TitularInvalidoException e2) {
-            JOptionPane.showMessageDialog(this, "Titular inválido, \ndatos no guardados", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (InteresInvalidoException e3) {
-            JOptionPane.showMessageDialog(this, "Interés inválido, \ndatos no guardados", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (SaldoMinInvalidoException e4) {
-            JOptionPane.showMessageDialog(this, "Saldo mínimo inválido, \ndatos no guardados", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (SaldoInvalidoException | SaldoMinInvalidoException | FechaInvalidaException | ComisionInvalidaException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error en los datos ingresados.", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             limpiarCampos();
-        }
-    }
-
-    // Método auxiliar para validar y convertir
-    private double validarYConvertirADouble(String valor, String campo) {
-        try {
-            return Double.parseDouble(valor);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(campo + " debe ser un número válido.");
         }
     }
 
@@ -197,5 +151,4 @@ public class PanelAltaCorriente extends JPanel {
         tipoComboBox.setSelectedIndex(0);
     }
 }
-
 
