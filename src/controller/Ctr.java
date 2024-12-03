@@ -1,6 +1,6 @@
 package controller;
 
-import java.io.BufferedReader;
+import java.io.BufferedReader; 
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -43,7 +43,7 @@ public class Ctr {
 	public Ctr() {
 		//Elementos auxiliares
 		listaCuentas=new Lista();
-		ctr=Ctr.getControlador();
+		
 		List<Long> listaNumeros=new ArrayList<Long>();
 		
 		//Cargar fichero
@@ -255,8 +255,7 @@ public class Ctr {
 					this.listaCuentas.agregar(caux);
 				} catch (Exception e) {}
 			}
-			
-			
+					
 
 		}
 		
@@ -304,14 +303,15 @@ public class Ctr {
     public static boolean esBisiesto(int year) {
         return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
     }
+    
 	public void generarPrueba() throws TitularInvalidoException, SaldoInvalidoException, InteresInvalidoException, SaldoMinInvalidoException, ComisionInvalidaException 
 	{
 		
-        CuentaCorriente cuentaCorriente1 = new CuentaCorriente("Juan Pérez", 1500.0, 500.0,LocalDate.now(), 10.0, TipoComisionMensual.JOVEN);
-        CuentaCorriente cuentaCorriente2 = new CuentaCorriente("Ana García", 2300.0, 800.0,LocalDate.now(), 15.0, TipoComisionMensual.COMUN);
+        CuentaCorriente cuentaCorriente1 = new CuentaCorriente("JuanPerez", 1500.0, 500.0,LocalDate.now(), 10.0, TipoComisionMensual.MANTENIMIENTO);
+        CuentaCorriente cuentaCorriente2 = new CuentaCorriente("AnaGarcia", 2300.0, 800.0,LocalDate.now(), 15.0, TipoComisionMensual.ADMINISTRACION);
         
-        CuentaAhorro cuentaAhorro1 = new CuentaAhorro("Carlos López", 5000.0, 300.0, LocalDate.now(), 2.5, TipoCuentaAhorro.ONLINE);
-        CuentaAhorro cuentaAhorro2 = new CuentaAhorro("Lucía Martínez", 12000.0, 1000.0,LocalDate.now(), 3.0, TipoCuentaAhorro.PLAZO_FIJO);
+        CuentaAhorro cuentaAhorro1 = new CuentaAhorro("CarlosLopez", 5000.0, 300.0, LocalDate.now(), 2.5, TipoCuentaAhorro.ONLINE);
+        CuentaAhorro cuentaAhorro2 = new CuentaAhorro("LuciaMartinez", 12000.0, 1000.0,LocalDate.now(), 3.0, TipoCuentaAhorro.PLAZO_FIJO);
         
         
         
@@ -321,14 +321,6 @@ public class Ctr {
         listaCuentas.agregar(cuentaAhorro1);
         listaCuentas.agregar(cuentaAhorro2);
     }
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 	
 }

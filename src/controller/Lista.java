@@ -68,8 +68,6 @@ public class Lista <E> {
     	}
     	
     	
-    	
-    	
     }
     
     public List<Cuenta> getLista() {

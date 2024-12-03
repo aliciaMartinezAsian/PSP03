@@ -1,23 +1,36 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.Ctr;
+import model.ComisionInvalidaException;
+import model.Cuenta;
+import model.InteresInvalidoException;
+import model.SaldoInvalidoException;
+import model.SaldoMinInvalidoException;
+import model.TitularInvalidoException;
+
 public class FrmPrincipal extends JFrame{
 
+    private static final long serialVersionUID = 1L;
+    
 	public PanelVer panelVer;
     public PanelAltaAhorro panelAltaAhorro;
-    public PanelMenuPrincipal panelMenuPrincipal;
+    public PanelAltaCorriente panelAltaCorriente;
+    public PanelLista panelLista;
     private MenuBar menuBar;
-    private static final long serialVersionUID = 1L;
     private JPanel contentPane;
+    
+    private Ctr ctr = Ctr.getControlador();
 
     public FrmPrincipal() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(150, 150, 450, 300);
+        setBounds(240, 240, 450, 300);
         setResizable(false);
         
         setTitle("Gestión de Cuentas");
@@ -25,7 +38,6 @@ public class FrmPrincipal extends JFrame{
         
         menuBar = new MenuBar();
         setJMenuBar(menuBar);
-
        
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -35,10 +47,12 @@ public class FrmPrincipal extends JFrame{
         // Inicializar paneles
         panelVer = new PanelVer();
         panelAltaAhorro = new PanelAltaAhorro();
-        panelMenuPrincipal = new PanelMenuPrincipal();
+        panelAltaCorriente = new PanelAltaCorriente();
+        panelLista = new PanelLista();
+     
         
         // Añadir el panel por defecto
-        contentPane.add(panelMenuPrincipal, BorderLayout.CENTER);
+        contentPane.add(panelLista, BorderLayout.CENTER);
         
         initListeners();
         
@@ -48,7 +62,12 @@ public class FrmPrincipal extends JFrame{
     private void initListeners() {
         menuBar.verItem.addActionListener(e -> showPanel(panelVer));
         menuBar.altaAhorroItem.addActionListener(e -> showPanel(panelAltaAhorro));
-        menuBar.menuPrincipalItem.addActionListener(e -> showPanel(panelMenuPrincipal));
+        menuBar.altaCorrienteItem.addActionListener(e -> showPanel(panelAltaCorriente));
+        menuBar.listaItem.addActionListener(e -> showPanel(panelLista));
+        menuBar.cargarItem.addActionListener(e -> cargarArchivo());
+        menuBar.guardarItem.addActionListener(e -> ctr.guardar());
+        menuBar.pruebaItem.addActionListener(e -> realizarPrueba());
+        menuBar.borrarItem.addActionListener(e -> vaciarLista());
     }
 
     private void showPanel(JPanel panel) {
@@ -56,5 +75,29 @@ public class FrmPrincipal extends JFrame{
         contentPane.add(panel, BorderLayout.CENTER);
         contentPane.revalidate();
         contentPane.repaint();
+    }
+    
+    private void cargarArchivo() {
+    	
+    	List<Cuenta> cuentas = ctr.getLista();
+    	
+    	panelLista.cargarCuentas(cuentas);
+    }
+    
+    private void realizarPrueba() {
+    	try {
+			ctr.generarPrueba();
+			List<Cuenta> cuentas = ctr.getLista();
+			panelLista.cargarCuentas(cuentas);
+			
+		} catch (TitularInvalidoException | SaldoInvalidoException | InteresInvalidoException
+				| SaldoMinInvalidoException | ComisionInvalidaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    private void vaciarLista() {
+    	
     }
 }

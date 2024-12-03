@@ -2,7 +2,6 @@ package view;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -30,20 +29,23 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import model.*;
 
+package view;
+
 import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+import controller.Ctr;
 import model.*;
 
-public class PanelAltaAhorro extends JPanel {
+public class PanelAltaCorriente extends JPanel {
     private JButton btnGuardar, btnCancelar;
-
-    private JTextField titularField, saldoField, saldoMinField, fechaAperturaField, interesField;
+    private JTextField titularField, saldoField, saldoMinField, fechaAperturaField, comisionField;
     private JComboBox<String> tipoComboBox;
-    
     private Ctr ctr = Ctr.getControlador();
 
-    public PanelAltaAhorro() {
+    public PanelAltaCorriente() {
         setLayout(null);
 
         // Campo Titular
@@ -78,21 +80,21 @@ public class PanelAltaAhorro extends JPanel {
         fechaApertura.setBounds(20, 100, 100, 25);
         fechaAperturaField.setBounds(130, 100, 150, 25);
 
-        // Campo Interés
-        JLabel interes = new JLabel("Interés:");
-        interesField = new JTextField(20);
-        add(interes);
-        add(interesField);
-        interes.setBounds(290, 100, 100, 25);
-        interesField.setBounds(390, 100, 60, 25);
+        // Campo Comisión Mantenimiento
+        JLabel comision = new JLabel("Comisión:");
+        comisionField = new JTextField(20);
+        add(comision);
+        add(comisionField);
+        comision.setBounds(290, 100, 100, 25);
+        comisionField.setBounds(390, 100, 60, 25);
 
-        // ComboBox Tipo de Cuenta
-        JLabel tipoCuenta = new JLabel("Tipo de cuenta:");
-        tipoComboBox = new JComboBox<>(new String[]{"COMUN", "JOVEN", "PLAZO_FIJO", "ONLINE"});
+        // ComboBox Tipo de Comisión
+        JLabel tipoCuenta = new JLabel("Tipo de comisión:");
+        tipoComboBox = new JComboBox<>(new String[]{"MANTENIMIENTO", "ADMINISTRACION", "TRANSFERENCIAS", "TARJETAS"});
         add(tipoCuenta);
         add(tipoComboBox);
-        tipoCuenta.setBounds(20, 140, 100, 25);
-        tipoComboBox.setBounds(130, 140, 320, 25);
+        tipoCuenta.setBounds(20, 140, 120, 25);
+        tipoComboBox.setBounds(150, 140, 300, 25);
 
         // Botón Guardar
         btnGuardar = new JButton("Guardar");
@@ -117,7 +119,7 @@ public class PanelAltaAhorro extends JPanel {
         String strSaldo = saldoField.getText().trim();
         String strSaldoMin = saldoMinField.getText().trim();
         String strFecha = fechaAperturaField.getText().trim();
-        String strInteres = interesField.getText().trim();
+        String strComision = comisionField.getText().trim();
         String strTipo = (String) tipoComboBox.getSelectedItem();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -125,7 +127,7 @@ public class PanelAltaAhorro extends JPanel {
         try {
             // Validar campos obligatorios
             if (titular.isEmpty() || strSaldo.isEmpty() || strSaldoMin.isEmpty() ||
-                strFecha.isEmpty() || strInteres.isEmpty()) {
+                strFecha.isEmpty() || strComision.isEmpty()) {
                 throw new IllegalArgumentException("Todos los campos son obligatorios.");
             }
 
@@ -144,21 +146,21 @@ public class PanelAltaAhorro extends JPanel {
             // Parsear valores numéricos con validación
             double saldo = validarYConvertirADouble(strSaldo, "Saldo");
             double saldoMin = validarYConvertirADouble(strSaldoMin, "Saldo mínimo");
-            double interes = validarYConvertirADouble(strInteres, "Interés");
+            double comision = validarYConvertirADouble(strComision, "Comisión");
 
-            // Validar tipo de cuenta
-            TipoCuentaAhorro tipo;
+            // Validar tipo de comisión
+            TipoComisionMensual tipo;
             try {
-                tipo = TipoCuentaAhorro.valueOf(strTipo);
+                tipo = TipoComisionMensual.valueOf(strTipo);
             } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("Tipo de cuenta no válido.");
+                throw new IllegalArgumentException("Tipo de comisión no válido.");
             }
 
-            // Crear la nueva cuenta
-            CuentaAhorro nuevaCuenta = new CuentaAhorro(titular, saldo, saldoMin, fecha, interes, tipo);
+            // Crear la nueva cuenta corriente
+            CuentaCorriente nuevaCuenta = new CuentaCorriente(titular, saldo, saldoMin, fecha, comision, tipo);
             ctr.anadir(nuevaCuenta);
 
-            JOptionPane.showMessageDialog(this, "Cuenta guardada con éxito.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Cuenta corriente guardada con éxito.", "Información", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (SaldoInvalidoException e) {
             JOptionPane.showMessageDialog(this, "Saldo inválido, \ndatos no guardados", "Error", JOptionPane.ERROR_MESSAGE);
@@ -186,13 +188,12 @@ public class PanelAltaAhorro extends JPanel {
         }
     }
 
-
     private void limpiarCampos() {
         titularField.setText("");
         saldoField.setText("");
         saldoMinField.setText("");
         fechaAperturaField.setText("");
-        interesField.setText("");
+        comisionField.setText("");
         tipoComboBox.setSelectedIndex(0);
     }
 }
