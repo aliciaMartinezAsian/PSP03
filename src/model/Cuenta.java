@@ -69,6 +69,7 @@ public class Cuenta {
 		return saldo;
 	}
 	public void setSaldo(Double saldo) throws SaldoInvalidoException {
+		
 		if (saldo < this.saldoMinimo)
 			throw new SaldoInvalidoException("El saldo no puede ser menor al saldo minimo");
 		else {
@@ -76,6 +77,7 @@ public class Cuenta {
 		}
 	}
 	public Double getSaldoMinimo() {
+		
 		return saldoMinimo;
 	}
 	public void setSaldoMinimo(Double saldoMinimo) throws SaldoMinInvalidoException {

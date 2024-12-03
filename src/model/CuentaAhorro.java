@@ -12,11 +12,13 @@ public class CuentaAhorro extends Cuenta {
 		setInteres(interes);
 		setTipo(tipo);
 	}
+	
 	public CuentaAhorro(String titular, Double saldo, Double saldoMinimo, LocalDate fechaApertura,Double interes, TipoCuentaAhorro tipo) throws TitularInvalidoException, SaldoInvalidoException, InteresInvalidoException, SaldoMinInvalidoException {
 		super(titular, saldo, saldoMinimo, fechaApertura);
 		setInteres(interes);
 		setTipo(tipo);
 	}
+
 
 	public Double getInteres() {
 		return interes;
@@ -38,7 +40,6 @@ public class CuentaAhorro extends Cuenta {
 	public void setTipo(TipoCuentaAhorro tipo) {	
 		this.tipo = tipo;
 	}
-
 
 
 	@Override
