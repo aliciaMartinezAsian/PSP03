@@ -181,7 +181,6 @@ public class Ctr {
 	 
 	public void anadir(Cuenta c) {
 		this.listaCuentas.agregar(c);
-		guardar();
 	}
 	public void borrarTodo() {
 		this.listaCuentas=new Lista<Cuenta>();
@@ -243,9 +242,11 @@ public class Ctr {
 			//Generar aleatoriamente cuentaAhorro o cuentaCorriente:
 			int aux=(int) Math.random()*2;
 			int nombre=(int) (Math.random()*(nombres.length+1));
-			double saldoMinimo=Math.random()*1000;
-				double f = Math.random()/Math.nextDown(1.0);
-			double saldo=saldoMinimo*(1.0 - f);
+			
+			 double saldoMinimo = Math.random() * 1000;
+		     double f = Math.random() * 0.999999; // Para asegurar que f nunca sea 1.0
+		     double saldo = saldoMinimo * (1.0 - f);
+		     
 			LocalDate fechaApertura=generarFecha(1950,LocalDate.now().getYear());
 			
 			if(aux==0) {
@@ -257,7 +258,7 @@ public class Ctr {
 				try {
 					CuentaCorriente caux=new CuentaCorriente(nombres[nombre],saldo,saldoMinimo,fechaApertura,comisionMantenimiento,tipo);
 					this.listaCuentas.agregar(caux);
-				} catch (Exception e) {}
+				} catch (Exception e) {System.out.println(e.getMessage());}
 
 				
 				

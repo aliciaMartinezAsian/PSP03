@@ -25,7 +25,7 @@ public class Cuenta {
 		setFechaApertura(fechaApertura);
 	}
 	public Cuenta(String titular, Double saldo, Double saldoMinimo, LocalDate fechaApertura) throws TitularInvalidoException, SaldoInvalidoException, SaldoMinInvalidoException {
-		
+		if(numCuenta==null) numCuenta=0L;
 		//Numero de cuenta se pone automatico y va aumentando
 		setNumero(Cuenta.numCuenta);
 		numCuenta++;

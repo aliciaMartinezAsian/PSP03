@@ -71,9 +71,15 @@ public class FrmPrincipal extends JFrame{
         menuBar.guardarItem.addActionListener(e -> ctr.guardar());
         menuBar.pruebaItem.addActionListener(e -> realizarPrueba());
         menuBar.borrarItem.addActionListener(e -> vaciarLista());
+        menuBar.generar1000CuentasItem.addActionListener(e -> cargar1000Cuentas());
     }
 
-    private void showPanel(JPanel panel) {
+    private void cargar1000Cuentas() {
+    	ctr.generarCuentas();
+    	panelLista.cargarCuentas(ctr.getLista());
+	}
+
+	private void showPanel(JPanel panel) {
         contentPane.removeAll();
         contentPane.add(panel, BorderLayout.CENTER);
         contentPane.revalidate();

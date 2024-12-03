@@ -15,6 +15,7 @@ public class MenuBar extends JMenuBar {
 	public JMenuItem borrarItem;
 	public JMenuItem cargarItem;
 	public JMenuItem pruebaItem;
+	public JMenuItem generar1000CuentasItem;
 	
     public MenuBar() {
         verItem = new JMenuItem("Ver");
@@ -39,6 +40,8 @@ public class MenuBar extends JMenuBar {
         pruebaItem = new JMenuItem("Generar prueba");
         fileItem.add(pruebaItem);
       
+        generar1000CuentasItem = new JMenuItem("Generar 1000 cuentas");
+        fileItem.add(generar1000CuentasItem);
         
         altaItem = new JMenu("Alta");     
         add(altaItem);
