@@ -240,16 +240,18 @@ public class Ctr {
 		 
 		for(int i=0;i<=cuentasGenerar;i++) {
 			//Generar aleatoriamente cuentaAhorro o cuentaCorriente:
-			int aux=(int) Math.random()*2;
-			int nombre=(int) (Math.random()*(nombres.length+1));
+			double aux= Math.random()*2;
+			int nombre=(int) (Math.random()*(nombres.length));
 			
-			 double saldoMinimo = Math.random() * 1000;
-		     double f = Math.random() * 0.999999; // Para asegurar que f nunca sea 1.0
-		     double saldo = saldoMinimo * (1.0 - f);
+			  // Generar un saldo mínimo aleatorio entre 0 y 1000
+	        double saldoMinimo = Math.random() * 1000;
+	        
+	        // Calcular el saldo, que siempre será mayor que el saldo mínimo
+	        double saldo = saldoMinimo +(Math.random()*1000000);
 		     
 			LocalDate fechaApertura=generarFecha(1950,LocalDate.now().getYear());
 			
-			if(aux==0) {
+			if(aux<1) {
 				//Genera una CuentaCorriente
 				double comisionMantenimiento=Math.random()*100; //de 0 a 100;
 				TipoComisionMensual tipo=TipoComisionMensual.values()[(int) Math.random()*4];
