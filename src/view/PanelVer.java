@@ -10,25 +10,28 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controller.Ctr;
 import model.Cuenta;
 import model.CuentaAhorro;
 import model.CuentaCorriente;
 
 public class PanelVer extends JPanel {
-    private List<Cuenta> cuentas;
+    private static List<Cuenta> cuentas;
     private int indiceActual = 0;
+    
+    private Ctr ctr = Ctr.getControlador();
 
-    private JButton btnPrimero, btnAnterior, btnSiguiente, btnUltimo;
+    private JButton btnCalcular, btnAnterior, btnSiguiente, btnBorrar;
 
-    private JTextField numeroField, titularField, saldoField, saldoMinField, fechaAperturaField;
-    private JTextField interesField, tipoAhorroField, comisionField;
-    private JComboBox<String> tipoComisionComboBox;
-    private JLabel numCuenta;
+    private JTextField numeroField, titularField, saldoField, saldoMinField, fechaAperturaField, tipoComisionField, tipoAhorroField;
+    private JTextField interesField, comisionField;
+    private JLabel numCuenta, comisionLabel, interesLabel,tipoAhorroLabel, tipoComisionLabel ;
 
     public PanelVer() {
-        cuentas = new ArrayList<>();
+    	
         setLayout(null);
-
+        cuentas=new ArrayList<Cuenta>();
+        
         // Campos comunes a ambas cuentas
         JLabel numeroLabel = new JLabel("Número:");
         numeroField = new JTextField(20);
@@ -71,54 +74,63 @@ public class PanelVer extends JPanel {
         fechaAperturaField.setBounds(120, 130, 150, 20);
 
         // Campos específicos para CuentaAhorro
-        JLabel interesLabel = new JLabel("Interés:");
+        interesLabel = new JLabel("Interés:");
         interesField = new JTextField(20);
         interesField.setEditable(false);
         add(interesLabel);
         add(interesField);
-        interesLabel.setBounds(20, 160, 100, 20);
-        interesField.setBounds(120, 160, 150, 20);
+        interesLabel.setBounds(300, 70, 100, 20);
+        interesField.setBounds(400, 70, 80, 20);
+        interesLabel.setVisible(false);
+        interesField.setVisible(false);
 
-        JLabel tipoAhorroLabel = new JLabel("Tipo ahorro:");
+        tipoAhorroLabel = new JLabel("Tipo ahorro:");
         tipoAhorroField = new JTextField(20);
         tipoAhorroField.setEditable(false);
         add(tipoAhorroLabel);
         add(tipoAhorroField);
-        tipoAhorroLabel.setBounds(20, 190, 100, 20);
-        tipoAhorroField.setBounds(120, 190, 150, 20);
+        tipoAhorroLabel.setBounds(300, 100, 100, 20);
+        tipoAhorroField.setBounds(400, 100, 80, 20);
+        tipoAhorroLabel.setVisible(false);
+        tipoAhorroField.setVisible(false);
 
         // Campos específicos para CuentaCorriente
-        JLabel comisionLabel = new JLabel("Comisión:");
+        comisionLabel = new JLabel("Comisión:");
         comisionField = new JTextField(20);
         comisionField.setEditable(false);
         add(comisionLabel);
         add(comisionField);
         comisionLabel.setBounds(300, 70, 100, 20);
         comisionField.setBounds(400, 70, 80, 20);
+        comisionLabel.setVisible(false);
+        comisionField.setVisible(false);
 
-        JLabel tipoComisionLabel = new JLabel("Tipo comisión:");
-        tipoComisionComboBox = new JComboBox<>();
-        tipoComisionComboBox.setEnabled(false);
+        tipoComisionLabel = new JLabel("Tipo comisión:");
+        tipoComisionField = new JTextField(20);
+        tipoComisionField.setEnabled(false);
         add(tipoComisionLabel);
-        add(tipoComisionComboBox);
+        add(tipoComisionField);
         tipoComisionLabel.setBounds(300, 100, 100, 20);
-        tipoComisionComboBox.setBounds(400, 100, 80, 20);
+        tipoComisionField.setBounds(400, 100, 80, 20);
+        tipoComisionLabel.setVisible(false);
+        tipoComisionField.setVisible(false);
+        
 
         // Botones de navegación
-        btnPrimero = new JButton("Primero");
+        btnCalcular = new JButton("Calcular");
         btnAnterior = new JButton("Anterior");
         btnSiguiente = new JButton("Siguiente");
-        btnUltimo = new JButton("Último");
+        btnBorrar = new JButton("Borrar");
 
-        add(btnPrimero);
-        add(btnAnterior);
+        add(btnCalcular);
+        add(btnBorrar);
         add(btnSiguiente);
-        add(btnUltimo);
+        add(btnAnterior);
 
-        btnPrimero.setBounds(50, 230, 90, 25);
+        btnCalcular.setBounds(50, 230, 90, 25);
         btnAnterior.setBounds(150, 230, 90, 25);
         btnSiguiente.setBounds(250, 230, 90, 25);
-        btnUltimo.setBounds(350, 230, 90, 25);
+        btnBorrar.setBounds(350, 230, 90, 25);
 
         // Etiqueta para el índice actual
         numCuenta = new JLabel("Cuenta: 0 de 0");
@@ -126,22 +138,31 @@ public class PanelVer extends JPanel {
         numCuenta.setBounds(200, 260, 150, 20);
 
         initListeners();
-        obtenerCuentas();
 
-        if (!cuentas.isEmpty()) mostrarCuenta(0);
+        if (cuentas.isEmpty()) mostrarCuenta(indiceActual);
     }
 
     private void initListeners() {
-        btnPrimero.addActionListener(e -> mostrarCuenta(0));
-        btnAnterior.addActionListener(e -> mostrarCuenta(indiceActual - 1));
+        btnCalcular.addActionListener(e -> calcular());
+        btnBorrar.addActionListener(e -> borrar());
         btnSiguiente.addActionListener(e -> mostrarCuenta(indiceActual + 1));
-        btnUltimo.addActionListener(e -> mostrarCuenta(cuentas.size() - 1));
+        btnAnterior.addActionListener(e -> mostrarCuenta(indiceActual - 1));
     }
 
-    public void obtenerCuentas() {
-        // Simula obtener cuentas (ejemplo).
-        cuentas = new ArrayList<>(); // Aquí cargarías las cuentas reales.
-    }
+    private void borrar() {
+    	ctr.borrar(cuentas.get(indiceActual));
+    	cuentas = ctr.getLista();
+    	if(indiceActual!=0)indiceActual--;	
+		mostrarCuenta(indiceActual);
+		
+	}
+
+	private void calcular() {
+		ctr.actualizarSaldo(cuentas.get(indiceActual));
+		mostrarCuenta(indiceActual);
+		
+	}
+
 
     public void mostrarCuenta(int indice) {
         if (indice < 0 || indice >= cuentas.size()) return;
@@ -150,23 +171,24 @@ public class PanelVer extends JPanel {
         Cuenta cuenta = cuentas.get(indice);
 
         // Mostrar campos comunes
+        
         numeroField.setText(String.valueOf(cuenta.getNumero()));
         titularField.setText(cuenta.getTitular());
-        saldoField.setText(String.valueOf(cuenta.getSaldo()));
-        saldoMinField.setText(String.valueOf(cuenta.getSaldoMinimo()));
+        saldoField.setText(String.format("%.2f", cuenta.getSaldo()));
+        saldoMinField.setText(String.format("%.2f",cuenta.getSaldoMinimo()));
         fechaAperturaField.setText(cuenta.getFechaApertura().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
         // Determinar el tipo de cuenta y ajustar visibilidad
         if (cuenta instanceof CuentaAhorro) {
             CuentaAhorro ahorro = (CuentaAhorro) cuenta;
-            interesField.setText(String.valueOf(ahorro.getInteres()));
+            interesField.setText(String.format("%.2f",ahorro.getInteres()));
             tipoAhorroField.setText(ahorro.getTipo().name());
             mostrarCamposAhorro(true);
             mostrarCamposCorriente(false);
         } else if (cuenta instanceof CuentaCorriente) {
             CuentaCorriente corriente = (CuentaCorriente) cuenta;
-            comisionField.setText(String.valueOf(corriente.getComisionMantenimiento()));
-            tipoComisionComboBox.setSelectedItem(corriente.getTipo().name());
+            comisionField.setText(String.format("%.2f",corriente.getComisionMantenimiento()));
+            tipoComisionField.setText(corriente.getTipo().name());
             mostrarCamposAhorro(false);
             mostrarCamposCorriente(true);
         }
@@ -175,13 +197,22 @@ public class PanelVer extends JPanel {
     }
 
     private void mostrarCamposAhorro(boolean mostrar) {
+    	interesLabel.setVisible(mostrar);
         interesField.setVisible(mostrar);
+        tipoAhorroLabel.setVisible(mostrar);
         tipoAhorroField.setVisible(mostrar);
     }
 
     private void mostrarCamposCorriente(boolean mostrar) {
+    	comisionLabel.setVisible(mostrar);
         comisionField.setVisible(mostrar);
-        tipoComisionComboBox.setVisible(mostrar);
+        tipoComisionLabel.setVisible(mostrar);
+        tipoComisionField.setVisible(mostrar);
+    }
+    
+    public void cargarCuentas(List<Cuenta> cuentasCargadas) {
+    	cuentas = cuentasCargadas;
+    	mostrarCuenta(indiceActual);
     }
 }
 
