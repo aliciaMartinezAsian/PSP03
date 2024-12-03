@@ -24,11 +24,12 @@ public class CuentaAhorro extends Cuenta {
 		return interes;
 	}
 
-	public void setInteres(Double interes2) throws InteresInvalidoException {
-		if(interes2>=0 && interes2<=100) {
-			throw new InteresInvalidoException ("El interes anual debe estar entre el 0% y el 100%");
-		}else {
+	public void setInteres(Double interes2) throws InteresInvalidoException {	
+		if(interes2>=0.0 && interes2<=100.0) {
 			this.interes = interes2;
+		}else {
+			throw new InteresInvalidoException ("El interes anual debe estar entre el 0% y el 100%");
+			
 		}
 		
 	}

@@ -32,7 +32,7 @@ public class Ctr {
 	
 	//Control=1 CuentaCorriente
 	//Control=2 CuentaAhorro
-	public static Ctr getControlador(){
+	public static Ctr  getControlador(){
 		if(ctr==null) {
 			ctr=new Ctr();
 			return ctr;

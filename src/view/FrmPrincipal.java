@@ -27,6 +27,7 @@ public class FrmPrincipal extends JFrame{
     private JPanel contentPane;
     
     private Ctr ctr = Ctr.getControlador();
+    
 
     public FrmPrincipal() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -98,6 +99,9 @@ public class FrmPrincipal extends JFrame{
     }
     
     private void vaciarLista() {
+    	ctr.borrarTodo();
+List<Cuenta> cuentas = ctr.getLista();
     	
+    	panelLista.cargarCuentas(cuentas);
     }
 }
