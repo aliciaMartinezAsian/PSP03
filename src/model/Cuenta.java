@@ -20,8 +20,8 @@ public class Cuenta {
 			
 		setNumero(numero);
 		setTitular(titular);
-		setSaldo(saldo);
 		setSaldoMinimo(saldoMinimo);
+		setSaldo(saldo);
 		setFechaApertura(fechaApertura);
 	}
 	public Cuenta(String titular, Double saldo, Double saldoMinimo, LocalDate fechaApertura) throws TitularInvalidoException, SaldoInvalidoException, SaldoMinInvalidoException {
@@ -31,8 +31,8 @@ public class Cuenta {
 		numCuenta++;
 		
 		setTitular(titular);
-		setSaldo(saldo);
 		setSaldoMinimo(saldoMinimo);
+		setSaldo(saldo);
 		setFechaApertura(fechaApertura);
 	}
 	
