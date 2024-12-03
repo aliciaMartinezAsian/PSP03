@@ -5,7 +5,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 
 public class MenuBar extends JMenuBar {
-	public JMenuItem verItem;
+	
+	private JMenu verItem;
+	public JMenuItem individualItem;
 	public JMenuItem listaItem;
 	private JMenu altaItem;
 	public JMenuItem altaAhorroItem;
@@ -18,12 +20,14 @@ public class MenuBar extends JMenuBar {
 	public JMenuItem generar1000CuentasItem;
 	
     public MenuBar() {
-        verItem = new JMenuItem("Ver");
-        
-        listaItem = new JMenuItem("Lista");
-        
+        verItem = new JMenu("Ver");
         add(verItem);
-        add(listaItem);
+        
+        individualItem = new JMenuItem("Vista indivual");
+        verItem.add(individualItem);
+        
+        listaItem = new JMenuItem("Vista lista");
+        verItem.add(listaItem);
         
         fileItem = new JMenu("File");
         add(fileItem);

@@ -63,7 +63,7 @@ public class FrmPrincipal extends JFrame{
     }
 
     private void initListeners() {
-        menuBar.verItem.addActionListener(e -> showPanel(panelVer));
+        menuBar.individualItem.addActionListener(e -> showPanel(panelVer));
         menuBar.altaAhorroItem.addActionListener(e -> showPanel(panelAltaAhorro));
         menuBar.altaCorrienteItem.addActionListener(e -> showPanel(panelAltaCorriente));
         menuBar.listaItem.addActionListener(e -> showPanel(panelLista));
@@ -114,5 +114,6 @@ public class FrmPrincipal extends JFrame{
     	List<Cuenta> cuentas = ctr.getLista();
     	panelVer.cargarCuentas(cuentas);
     	panelLista.cargarCuentas(cuentas);
+    	panelVer.vaciarCampos();
     }
 }

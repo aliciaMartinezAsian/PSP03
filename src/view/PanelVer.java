@@ -23,8 +23,7 @@ public class PanelVer extends JPanel {
 
     private JButton btnCalcular, btnAnterior, btnSiguiente, btnBorrar;
 
-    private JTextField numeroField, titularField, saldoField, saldoMinField, fechaAperturaField, tipoComisionField, tipoAhorroField;
-    private JTextField interesField, comisionField;
+    private JTextField numeroField, titularField, saldoField, saldoMinField, fechaAperturaField, tipoComisionField, tipoAhorroField, interesField,comisionField;
     private JLabel numCuenta, comisionLabel, interesLabel,tipoAhorroLabel, tipoComisionLabel ;
 
     public PanelVer() {
@@ -47,7 +46,7 @@ public class PanelVer extends JPanel {
         add(titularLabel);
         add(titularField);
         titularLabel.setBounds(20, 40, 100, 20);
-        titularField.setBounds(120, 40, 250, 20);
+        titularField.setBounds(120, 40, 150, 20);
 
         JLabel saldoLabel = new JLabel("Saldo:");
         saldoField = new JTextField(20);
@@ -79,8 +78,8 @@ public class PanelVer extends JPanel {
         interesField.setEditable(false);
         add(interesLabel);
         add(interesField);
-        interesLabel.setBounds(300, 70, 100, 20);
-        interesField.setBounds(400, 70, 80, 20);
+        interesLabel.setBounds(280, 70, 100, 20);
+        interesField.setBounds(376, 70, 80, 20);
         interesLabel.setVisible(false);
         interesField.setVisible(false);
 
@@ -89,8 +88,8 @@ public class PanelVer extends JPanel {
         tipoAhorroField.setEditable(false);
         add(tipoAhorroLabel);
         add(tipoAhorroField);
-        tipoAhorroLabel.setBounds(300, 100, 100, 20);
-        tipoAhorroField.setBounds(400, 100, 80, 20);
+        tipoAhorroLabel.setBounds(280, 100, 100, 20);
+        tipoAhorroField.setBounds(376, 100, 114, 20);
         tipoAhorroLabel.setVisible(false);
         tipoAhorroField.setVisible(false);
 
@@ -100,18 +99,18 @@ public class PanelVer extends JPanel {
         comisionField.setEditable(false);
         add(comisionLabel);
         add(comisionField);
-        comisionLabel.setBounds(300, 70, 100, 20);
-        comisionField.setBounds(400, 70, 80, 20);
+        comisionLabel.setBounds(280, 70, 100, 20);
+        comisionField.setBounds(376, 70, 80, 20);
         comisionLabel.setVisible(false);
         comisionField.setVisible(false);
 
         tipoComisionLabel = new JLabel("Tipo comisión:");
         tipoComisionField = new JTextField(20);
-        tipoComisionField.setEnabled(false);
+        tipoComisionField.setEditable(false);
         add(tipoComisionLabel);
         add(tipoComisionField);
-        tipoComisionLabel.setBounds(300, 100, 100, 20);
-        tipoComisionField.setBounds(400, 100, 80, 20);
+        tipoComisionLabel.setBounds(280, 100, 100, 20);
+        tipoComisionField.setBounds(376, 100, 114, 20);
         tipoComisionLabel.setVisible(false);
         tipoComisionField.setVisible(false);
         
@@ -213,6 +212,19 @@ public class PanelVer extends JPanel {
     public void cargarCuentas(List<Cuenta> cuentasCargadas) {
     	cuentas = cuentasCargadas;
     	mostrarCuenta(indiceActual);
+    }
+    
+    public void vaciarCampos() {
+    	numeroField.setText("");
+    	titularField.setText("");
+    	saldoField.setText("");
+    	saldoMinField.setText("");
+    	fechaAperturaField.setText("");
+    	tipoComisionField.setText("");
+    	tipoAhorroField.setText("");
+    	interesField.setText("");
+    	comisionField.setText("");
+    	numCuenta.setText("Cuenta 0 de 0");
     }
 }
 
