@@ -87,11 +87,12 @@ public class FrmPrincipal extends JFrame{
     }
     
     private void cargarArchivo() {
-    	
     	ctr.cargar();
     	List<Cuenta> cuentas = ctr.getLista();
     	
     	panelLista.cargarCuentas(cuentas);
+    	panelVer.cargarCuentas(cuentas);
+    	
 
     }
     
