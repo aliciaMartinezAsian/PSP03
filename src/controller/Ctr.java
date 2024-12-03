@@ -110,7 +110,7 @@ public class Ctr {
 	                        double comisionMantenimiento = Double.parseDouble(datos[5].trim());
 	                        TipoComisionMensual tipo = TipoComisionMensual.valueOf(datos[6].trim());
 
-	                        // Crear la cuenta y añadirla a la lista
+	                        // Crear la cuenta 
 	                        return new CuentaCorriente(numero, titular, saldo, saldoMinimo, fechaApertura, comisionMantenimiento, tipo);
 	                      
 
@@ -139,8 +139,7 @@ public class Ctr {
 		                TipoCuentaAhorro tipo = TipoCuentaAhorro.valueOf(datos[6].trim());  // Cambiar a TipoCuentaAhorro
 
 		                // Crear la cuenta de ahorro y añadirla a la lista
-		                CuentaAhorro cuenta = new CuentaAhorro(numero, titular, saldo, saldoMinimo, fechaApertura, interes, tipo);
-		                listaCuentas.agregar(cuenta);  // Supongo que listaCuentas es una colección de tipo List<CuentaAhorro>
+		                return new CuentaAhorro(numero, titular, saldo, saldoMinimo, fechaApertura, interes, tipo);
 
 		        }
 		    
@@ -165,7 +164,7 @@ public class Ctr {
 
 		private void guardarCuentaCorriente(CuentaCorriente cuenta, BufferedWriter bw) throws IOException {
 		    // Escribir en el archivo los datos de la cuenta corriente
-		    bw.write("1\n");  // Indicador de que es una cuenta corriente
+		    bw.write(1); // Indicador de que es una cuenta corriente
 		    bw.write(cuenta.getNumero() + "," + cuenta.getTitular() + "," + cuenta.getSaldo() + "," +
 		             cuenta.getSaldoMinimo() + "," + cuenta.getFechaApertura() + "," + cuenta.getComisionMantenimiento() + "," +
 		             cuenta.getTipo().name() + "\n");
@@ -173,7 +172,7 @@ public class Ctr {
 
 		private void guardarCuentaAhorro(CuentaAhorro cuenta, BufferedWriter bw) throws IOException {
 		    // Escribir en el archivo los datos de la cuenta de ahorro
-		    bw.write("2\n");  // Indicador de que es una cuenta de ahorro
+			bw.write(2);  // Indicador de que es una cuenta de ahorro
 		    bw.write(cuenta.getNumero() + "," + cuenta.getTitular() + "," + cuenta.getSaldo() + "," +
 		             cuenta.getSaldoMinimo() + "," + cuenta.getFechaApertura() + "," + cuenta.getInteres() + "," +
 		             cuenta.getTipo().name() + "\n");
