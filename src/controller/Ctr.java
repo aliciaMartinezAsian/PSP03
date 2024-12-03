@@ -254,7 +254,7 @@ public class Ctr {
 			if(aux<1) {
 				//Genera una CuentaCorriente
 				double comisionMantenimiento=Math.random()*100; //de 0 a 100;
-				TipoComisionMensual tipo=TipoComisionMensual.values()[(int) Math.random()*4];
+				TipoComisionMensual tipo = TipoComisionMensual.values()[(int) (Math.random() * 4)];
 				
 				//Anadir a la lista
 				try {
@@ -267,7 +267,7 @@ public class Ctr {
 			}else {
 				//Genera una CuentaAhorro
 				double interes=Math.random()*10; //de 0 a 10;
-				TipoCuentaAhorro tipo=TipoCuentaAhorro.values()[(int) Math.random()*4];
+				TipoCuentaAhorro tipo = TipoCuentaAhorro.values()[(int) (Math.random() * 4)];
 				
 				//Anadir a la lista
 				try {
